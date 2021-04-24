@@ -1,12 +1,10 @@
 import { useState, useEffect } from 'react'
 import ReactTable from 'react-table-v6'
-import 'react-table-v6/react-table.css'
-import { Jumbotron, Container, Row, Col } from 'reactstrap'
 import axios from 'axios'
+import 'react-table-v6/react-table.css'
 
-function App() {
-
-  const [randomUserState, setRandomUserState] = useState({
+const App = () => {
+  const [userState, setUserState] = useState({
     users: [],
     columns: [
       {
@@ -23,51 +21,28 @@ function App() {
         Header: 'phone',
         accessor: 'phone',
         filterable: true
-      },
-      {
-        Header: 'cell',
-        accessor: 'cell',
-        filterable: true
       }
     ]
   })
 
   useEffect(() => {
-    axios.get('https://randomuser.me/api/?results=50')
-      .then(({ data }) => {
-        const randoUsers = data.results.map(randoUser => ({
-          name: `${randoUser.name.first} ${randoUser.name.last}`,
-          email: randoUser.email,
-          phone: randoUser.phone,
-          cell: randoUser.cell
-        })
-        )
-        console.log(randoUsers)
-        setRandomUserState({ ...randomUserState, users: randoUsers })
+    axios.get('https://randomuser.me/api?results=20')
+      .then(({ data: { results } }) => {
+        const users = results.map(user => ({
+          name: `${user.name.first} ${user.name.last}`,
+          email: user.email,
+          phone: user.phone
+        }))
+        setUserState({ ...userState, users })
       })
-      .catch(err => console.log(err))
+      .catch(err => console.error(err))
   }, [])
 
   return (
-    <>
-      <Container>
-        <Row>
-          <Col xs='12'>
-            <Jumbotron>
-              <h1 className="display-3 text-center">Employee Directory</h1>
-            </Jumbotron>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs='12'>
-            <ReactTable
-              data={randomUserState.users}
-              columns={randomUserState.columns}
-            />
-          </Col>
-        </Row>
-      </Container>
-    </>
+    <ReactTable
+      data={userState.users}
+      columns={userState.columns}
+    />
   )
 }
 
