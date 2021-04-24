@@ -1,0 +1,39 @@
+li{
+    list-style-type: none;
+}
+
+nav{
+    display: flex;
+    justify-content: center;
+    background-color: blanchedalmond;
+    border-bottom: 10px solid #000000;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.filter{
+    color: rgb(197, 65, 65);
+    opacity: 0;
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+}
+
+.filter:hover{
+    opacity: 1;
+}
+
+footer{
+    background-color: blanchedalmond;
+    border-top: 4px solid black;
+    padding-bottom: 2px;
+    line-height: 1;
+}
+
+.footer{
+    display: flex;
+    justify-content: space-around;
+}
